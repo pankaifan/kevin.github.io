@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MySQL on Kevin&#39;s Blog</title>
+    <link>https://pankaifan.github.io/tags/mysql/</link>
+    <description>Recent content in MySQL on Kevin&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-Hans</language>
+    <lastBuildDate>Fri, 27 Dec 2019 14:00:11 +0800</lastBuildDate>
+    
+	<atom:link href="https://pankaifan.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>记录一次在高并发情况下，出现的死锁问题</title>
+      <link>https://pankaifan.github.io/post/msql_deadlock/</link>
+      <pubDate>Fri, 27 Dec 2019 14:00:11 +0800</pubDate>
+      
+      <guid>https://pankaifan.github.io/post/msql_deadlock/</guid>
+      <description>这个问题是我在实习期间遇到的，当时测试在压测的时候发现了数据库卡死，经过一步一步的排查，发现是逻辑代码写的不完善，导致发生了死锁。我觉得这个</description>
+    </item>
+    
+  </channel>
+</rss>

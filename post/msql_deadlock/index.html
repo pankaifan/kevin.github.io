@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>
+记录一次在高并发情况下，出现的死锁问题
+</title>
+
+    
+
+
+  
+  <meta name="author" content="Kevin" />
+  <meta name="description" content="Kevin的生活经历记录~" />
+
+
+
+<meta name="generator" content="Hugo 0.62.0" />
+
+<link rel="canonical" href="https://pankaifan.github.io/post/msql_deadlock/" />
+
+
+<meta property="og:title" content="记录一次在高并发情况下，出现的死锁问题" />
+<meta property="og:description" content="这个问题是我在实习期间遇到的，当时测试在压测的时候发现了数据库卡死，经过一步一步的排查，发现是逻辑代码写的不完善，导致发生了死锁。我觉得这个" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pankaifan.github.io/post/msql_deadlock/" />
+<meta property="article:published_time" content="2019-12-27T14:00:11+08:00" />
+<meta property="article:modified_time" content="2019-12-27T14:00:11+08:00" />
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="记录一次在高并发情况下，出现的死锁问题"/>
+<meta name="twitter:description" content="这个问题是我在实习期间遇到的，当时测试在压测的时候发现了数据库卡死，经过一步一步的排查，发现是逻辑代码写的不完善，导致发生了死锁。我觉得这个"/>
+
+
+<link rel="stylesheet" href="/css/github-markdown.css" />
+<link rel="stylesheet" href="/css/semantic.min.css" />
+<link rel="stylesheet" href="/css/site.css" />
+
+
+<style>
+  a {
+    color: seagreen !important;
+  }
+</style>
+
+
+
+
+  </head>
+
+  
+  <body>
+  
+    <div class="flip-container">
+      <div class="flipper">
+        <section class="front">
+          
+<nav class="ui secondary menu dream-menu">
+
+  <div class="item">
+    <i class="large link bullseye icon dream-flip-toggle" title="翻转！"></i>
+  </div>
+  <div class="item">
+    <i class="large link home icon" title="首页" onclick="window.location.href = 'https:\/\/pankaifan.github.io'"></i>
+  </div>
+  <div class="item">
+    <i id="theme-switch" class="large link icon" onclick="themeSwitch()"></i>
+  </div>
+</nav>
+
+          
+<div class="ui centered relaxed grid dream-grid">
+  <div class="sixteen wide mobile sixteen wide tablet twelve wide computer column markdown-body dream-single">
+
+    <section class="ui top attached segment" id="dream-save-post-as-img">
+      <header style="margin-top: 0 !important;">
+        <h2 class="ui header">
+          记录一次在高并发情况下，出现的死锁问题
+          <div class="sub header">@ Kevin · Friday, Dec 27, 2019 · 2 分钟阅读 · 更新于 Dec 27, 2019</div>
+        </h2>
+      </header>
+      <article style="margin-top: 2rem;"><p>这个问题是我在实习期间遇到的，当时测试在压测的时候发现了数据库卡死，经过一步一步的排查，发现是逻辑代码写的不完善，导致发生了死锁。我觉得这个问题可以在这里记录下来。</p>
+<p>首先讲一下大家都熟悉的产生死锁的四个必要条件</p>
+<ol>
+<li><strong>互斥条件：</strong> 指进程对所分配到的资源进行排它性使用，即在一段时间内某资源只由一个进程占用。如果此时还有其它进程请求资源，则请求者只能等待，直至占有资源的进程用毕释放。</li>
+<li><strong>请求和保持条件：</strong> 指进程已经保持至少一个资源，但又提出了新的资源请求，而该资源已被其它进程占有，此时请求进程阻塞，但又对自己已获得的其它资源保持不放。</li>
+<li><strong>不剥夺条件：</strong> 指进程已获得的资源，在未使用完之前，不能被剥夺，只能在使用完时由自己释放。</li>
+<li><strong>环路等待条件：</strong> 指在发生死锁时，必然存在一个进程——资源的环形链，即进程集合{P0，P1，P2，···，Pn}中的P0正在等待一个P1占用的资源；P1正在等待P2占用的资源，……，Pn正在等待已被P0占用的资源。</li>
+</ol>
+<p>下面是发生死锁问题的代码段</p>
+<pre><code>func MysqlDeadLock() {
+....
+    rows, err := db.Model(&amp;User{}).Where(&quot;name = ?&quot;, &quot;zhangsan&quot;).Select(&quot;name, age, email&quot;).Rows() // (*sql.Rows, error)
+ 
+    defer rows.Close() // rows 需要在请求结束后才能释放
+ 
+// rows占用了一个连接，但此处又需要从db连接池中取出一个db连接，若此时连接池没有可用连接且到达最大连接数，请求会阻塞在这里等待可用连接。
+// 但由于 rows 需要在请求结束后才能释放，当这种情况同时导致占用了所有可用连接时，服务器就发生了死锁，导致后面来的数据库请求都不可用。
+    urrs := make([]UnreadResult, 0)
+    if err := db.Model(&amp;UnreadResult{}).Where(&quot;user_id = ?&quot;, req.ID).Find(&amp;urrs).Err; err != nil {
+        .... // handle error
+    }
+ 
+    for rows.Next() {
+        ...
+        rows.Scan(&amp;name, &amp;age, &amp;email)
+        if someErr != nil {
+            return err 
+        }
+        ...
+    }
+}
+</code></pre><p>在并发量很低的情况下，这段代码是可以正常运行的，所以当时我也没觉得这个有什么问题，结果一提测，哦豁出bug了。。。。</p>
+<p>下面是解决死锁问题后的代码</p>
+<pre><code>func MysqlHandler() {
+    rows, err := db.Model(&amp;User{}).Where(&quot;name = ?&quot;, &quot;zhangsan&quot;).Select(&quot;name, age, email&quot;).Rows() // (*sql.Rows, error)
+    for rows.Next() {
+        ...
+        rows.Scan(&amp;name, &amp;age, &amp;email)
+        if someErr != nil {
+        return err 
+        }
+        ...// handle error       
+    }
+    //及时将rows关闭，然后才进行下面的数据库连接
+    rows.Close()
+
+    urrs := make([]UnreadResult, 0)
+    if err := db.Model(&amp;UnreadResult{}).Where(&quot;user_id = ?&quot;, req.ID).Find(&amp;urrs).Err; err != nil {
+            .... // handle error
+    }
+    
+}
+</code></pre><p>defer虽然给我们带来了方面，但是不注意细节的话，还是容易出bug呀，有时候释放资源，关闭连接等操作还是不要太过依赖defer，就好像本文中的问题代码，要及时关闭连接，才不会出现死锁问题。</p>
+</article>
+    </section>
+
+    <footer class="ui attached segment dream-tags">
+      
+        
+          <a class="ui label" href="/tags/%E6%8A%80%E6%9C%AF" title="技术">技术</a>
+        
+          <a class="ui label" href="/tags/go" title="Go">Go</a>
+        
+          <a class="ui label" href="/tags/mysql" title="MySQL">MySQL</a>
+        
+      
+      <div
+        class="ui label"
+        style="float: right; background: #1b1c1d !important; cursor: pointer;"
+        onclick="savePostAsImg()">
+        <i class="save icon"></i> Save as image
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+  <div class="sixteen wide mobile sixteen wide tablet four wide computer column">
+    <article class="dream-header">
+  <section class="ui top attached center aligned segment">
+    <div class="ui small circular image">
+      
+        <img src="/img/head.jpg">
+      
+    </div>
+
+    <h3 class="ui header">Kevin的博客<div class="sub header" style="margin-top: 0.5rem;">一个小小菜鸟记录学习和踩坑的地方</div>
+    </h3>
+
+    <div class="ui horizontal list">
+      
+      <a class="item" href="/tags">
+        <i class="tags icon" title="所有标签"></i>
+      </a>
+      <a class="item" href="/categories">
+        <i class="th list icon" title="所有分类"></i>
+      </a>
+    </div>
+  </section>
+
+  
+  <section class="ui attached center aligned segment dream-tags">
+    
+      <a class="ui label" href="/tags/go" title="go">go</a>
+    
+      <a class="ui label" href="/tags/mysql" title="mysql">mysql</a>
+    
+      <a class="ui label" href="/tags/%E6%8A%80%E6%9C%AF" title="技术">技术</a>
+    
+  </section>
+  
+
+  
+  <section class="ui attached segment dream-categories">
+    <div class="ui accordion">
+      
+        <div class="title">
+          <i class="dropdown icon"></i>
+          <a href="/categories/golang" class="item">golang</a>
+        </div>
+        <div class="content">
+          <div class="ui list">
+          
+            <div class="item">
+              <div class="content">
+                <a href="https://pankaifan.github.io/post/go-defer/" class="item">Golang中的defer</a>
+              </div>
+            </div>
+          
+          </div>
+        </div>
+      
+        <div class="title">
+          <i class="dropdown icon"></i>
+          <a href="/categories/%E8%AE%B0%E5%BD%95" class="item">记录</a>
+        </div>
+        <div class="content">
+          <div class="ui list">
+          
+            <div class="item">
+              <div class="content">
+                <a href="https://pankaifan.github.io/post/msql_deadlock/" class="item">记录一次在高并发情况下，出现的死锁问题</a>
+              </div>
+            </div>
+          
+          </div>
+        </div>
+      
+    </div>
+  </section>
+  
+
+  <section class="ui bottom attached center aligned segment">
+      
+      <p>© 2019 Kevin&#39;s Blog</p>
+      
+      <p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with theme <a href="https://github.com/g1eny0ung/hugo-theme-dream" target="_blank">Dream</a>.</p>
+  </section>
+</article>
+
+  </div>
+</div>
+
+        </section>
+        <section class="back">
+          
+<nav class="ui secondary menu dream-menu">
+
+  <div class="item">
+    <i class="large link bullseye icon dream-flip-toggle" title="翻转！"></i>
+  </div>
+  <div class="item">
+    <i class="large link home icon" title="首页" onclick="window.location.href = 'https:\/\/pankaifan.github.io'"></i>
+  </div>
+  <div class="item">
+    <i id="theme-switch" class="large link icon" onclick="themeSwitch()"></i>
+  </div>
+</nav>
+
+          <div class="ui centered relaxed grid dream-grid dream-back">
+  
+
+  <section class="sixteen wide mobile eight wide tablet four wide computer column dream-column">
+    <article>
+      <div class="ui top attached segment">
+        <h3 class="ui header">社交链接</h3>
+      </div>
+      <div class="ui attached segment">
+        <nav class="ui secondary menu dream-menu">
+          
+
+          
+
+          
+
+          
+
+          
+        </nav>
+      </div>
+    </article>
+  </section>
+
+  <section class="sixteen wide mobile eight wide tablet four wide computer column dream-column">
+    
+  </section>
+
+  
+  
+
+</div>
+
+        </section>
+      </div>
+    </div>
+
+    <script src="/js/jquery.min.js"></script>
+<script src="/js/semantic.min.js"></script>
+<script src="/js/imagesloaded.pkgd.min.js"></script>
+<script src="/js/masonry.pkgd.min.js"></script>
+<script src="/js/nav.js"></script>
+<script src="/js/header.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/theme.js"></script>
+<script src="/js/html2canvas.min.js"></script>
+
+
+
+  </body>
+</html>

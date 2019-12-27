@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Kevin&#39;s Blog</title>
+    <link>https://pankaifan.github.io/categories/</link>
+    <description>Recent content in Categories on Kevin&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-Hans</language>
+    <lastBuildDate>Fri, 27 Dec 2019 14:00:11 +0800</lastBuildDate>
+    
+	<atom:link href="https://pankaifan.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>记录</title>
+      <link>https://pankaifan.github.io/categories/%E8%AE%B0%E5%BD%95/</link>
+      <pubDate>Fri, 27 Dec 2019 14:00:11 +0800</pubDate>
+      
+      <guid>https://pankaifan.github.io/categories/%E8%AE%B0%E5%BD%95/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Golang</title>
+      <link>https://pankaifan.github.io/categories/golang/</link>
+      <pubDate>Thu, 26 Dec 2019 14:00:11 +0800</pubDate>
+      
+      <guid>https://pankaifan.github.io/categories/golang/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

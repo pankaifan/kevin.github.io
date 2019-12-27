@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Kevin&#39;s Blog</title>
+    <link>https://pankaifan.github.io/tags/</link>
+    <description>Recent content in Tags on Kevin&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-Hans</language>
+    <lastBuildDate>Fri, 27 Dec 2019 14:00:11 +0800</lastBuildDate>
+    
+	<atom:link href="https://pankaifan.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Go</title>
+      <link>https://pankaifan.github.io/tags/go/</link>
+      <pubDate>Fri, 27 Dec 2019 14:00:11 +0800</pubDate>
+      
+      <guid>https://pankaifan.github.io/tags/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>MySQL</title>
+      <link>https://pankaifan.github.io/tags/mysql/</link>
+      <pubDate>Fri, 27 Dec 2019 14:00:11 +0800</pubDate>
+      
+      <guid>https://pankaifan.github.io/tags/mysql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>技术</title>
+      <link>https://pankaifan.github.io/tags/%E6%8A%80%E6%9C%AF/</link>
+      <pubDate>Fri, 27 Dec 2019 14:00:11 +0800</pubDate>
+      
+      <guid>https://pankaifan.github.io/tags/%E6%8A%80%E6%9C%AF/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

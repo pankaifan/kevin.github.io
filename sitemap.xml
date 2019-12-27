@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://pankaifan.github.io/categories/</loc>
+    <lastmod>2019-12-27T14:00:11+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pankaifan.github.io/tags/go/</loc>
+    <lastmod>2019-12-27T14:00:11+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pankaifan.github.io/</loc>
+    <lastmod>2019-12-27T14:00:11+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pankaifan.github.io/tags/mysql/</loc>
+    <lastmod>2019-12-27T14:00:11+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pankaifan.github.io/post/</loc>
+    <lastmod>2019-12-27T14:00:11+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pankaifan.github.io/tags/</loc>
+    <lastmod>2019-12-27T14:00:11+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pankaifan.github.io/tags/%E6%8A%80%E6%9C%AF/</loc>
+    <lastmod>2019-12-27T14:00:11+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pankaifan.github.io/categories/%E8%AE%B0%E5%BD%95/</loc>
+    <lastmod>2019-12-27T14:00:11+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pankaifan.github.io/post/msql_deadlock/</loc>
+    <lastmod>2019-12-27T14:00:11+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pankaifan.github.io/categories/golang/</loc>
+    <lastmod>2019-12-26T14:00:11+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pankaifan.github.io/post/go-defer/</loc>
+    <lastmod>2019-12-26T14:00:11+08:00</lastmod>
+  </url>
+  
+</urlset>
