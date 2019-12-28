@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on Kevin&#39;s Blog</title>
+    <link>https://pankaifan.github.io/categories/linux/</link>
+    <description>Recent content in Linux on Kevin&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-Hans</language>
+    <lastBuildDate>Sat, 28 Dec 2019 14:00:11 +0800</lastBuildDate>
+    
+	<atom:link href="https://pankaifan.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Linux常用命令</title>
+      <link>https://pankaifan.github.io/post/linux/</link>
+      <pubDate>Sat, 28 Dec 2019 14:00:11 +0800</pubDate>
+      
+      <guid>https://pankaifan.github.io/post/linux/</guid>
+      <description>最初接触编程的时候是在windows上，虽然那时候或多或少接触过Ubuntu，但是当时却觉得界面没有window好，而且没有window用起</description>
+    </item>
+    
+  </channel>
+</rss>

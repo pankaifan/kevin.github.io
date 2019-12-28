@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>
+Linux常用命令
+</title>
+
+    
+
+
+  
+  <meta name="author" content="Kevin" />
+  <meta name="description" content="Kevin的生活经历记录~" />
+
+
+
+<meta name="generator" content="Hugo 0.62.0" />
+
+<link rel="canonical" href="https://pankaifan.github.io/post/linux/" />
+
+
+<meta property="og:title" content="Linux常用命令" />
+<meta property="og:description" content="最初接触编程的时候是在windows上，虽然那时候或多或少接触过Ubuntu，但是当时却觉得界面没有window好，而且没有window用起" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pankaifan.github.io/post/linux/" />
+<meta property="article:published_time" content="2019-12-28T14:00:11+08:00" />
+<meta property="article:modified_time" content="2019-12-28T14:00:11+08:00" />
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Linux常用命令"/>
+<meta name="twitter:description" content="最初接触编程的时候是在windows上，虽然那时候或多或少接触过Ubuntu，但是当时却觉得界面没有window好，而且没有window用起"/>
+
+
+<link rel="stylesheet" href="/css/github-markdown.css" />
+<link rel="stylesheet" href="/css/semantic.min.css" />
+<link rel="stylesheet" href="/css/site.css" />
+
+
+<style>
+  a {
+    color: seagreen !important;
+  }
+</style>
+
+
+
+
+  </head>
+
+  
+  <body>
+  
+    <div class="flip-container">
+      <div class="flipper">
+        <section class="front">
+          
+<nav class="ui secondary menu dream-menu">
+
+  <div class="item">
+    <i class="large link bullseye icon dream-flip-toggle" title="翻转！"></i>
+  </div>
+  <div class="item">
+    <i class="large link home icon" title="首页" onclick="window.location.href = 'https:\/\/pankaifan.github.io'"></i>
+  </div>
+  <div class="item">
+    <i id="theme-switch" class="large link icon" onclick="themeSwitch()"></i>
+  </div>
+</nav>
+
+          
+<div class="ui centered relaxed grid dream-grid">
+  <div class="sixteen wide mobile sixteen wide tablet twelve wide computer column markdown-body dream-single">
+
+    <section class="ui top attached segment" id="dream-save-post-as-img">
+      <header style="margin-top: 0 !important;">
+        <h2 class="ui header">
+          Linux常用命令
+          <div class="sub header">@ Kevin · Saturday, Dec 28, 2019 · 6 分钟阅读 · 更新于 Dec 28, 2019</div>
+        </h2>
+      </header>
+      <article style="margin-top: 2rem;"><p>最初接触编程的时候是在windows上，虽然那时候或多或少接触过Ubuntu，但是当时却觉得界面没有window好，而且没有window用起来顺手。后来去实习的时候，公司配的电脑是Ubuntu，起初开发的时候还是不太习惯，后来慢慢觉得在Ubuntu下开发比window感觉好很多，所以这篇文章就记录一下平时在Ubuntu常用的命令。</p>
+<p><strong>1、cd</strong></p>
+<pre><code>    cd dirName：要切换的目标目录
+    cd：回到用户的home目录 
+    cd ~username：进入指定用户的家目录 
+    cd - ：在当前目录和前一次所在的目录来回切换 
+    cd ..:切换至其父目录
+</code></pre><p><strong>2、ls</strong></p>
+<pre><code>    ls：列举当前工作目录的内容
+    -a 显示所有文件及目录 (ls内定将文件名或目录名称开头为&quot;.&quot;的视为隐藏档，不会列出)
+    -l 除文件名称外，亦将文件型态、权限、拥有者、文件大小等资讯详细列出
+    -r 将文件以相反次序显示(原定依英文字母次序)
+    -t 将文件依建立时间之先后次序列出
+    -A 同 -a ，但不列出 &quot;.&quot; (目前目录) 及 &quot;..&quot; (父目录)
+    -F 在列出的文件名称后加一符号；例如可执行档则加 &quot;*&quot;, 目录则加 &quot;/&quot;
+    -R 若目录下有文件，则以下之文件亦皆依序列出
+</code></pre><p><strong>3、mkdir</strong></p>
+<pre><code>    mkdir test：创建一个名为test的空目录
+    mkdir -p file/path/test：路径中的某些目录尚不存在,加上此选项后,系统将自动建立好那些尚不存在的目录,即一次可以建立多个目录;
+    mkdir -m：可以设定权限，类似chmod
+    mkdir -v：每次创建新目录都显示信息
+</code></pre><p><strong>4、chmod</strong></p>
+<pre><code>    权限设定，例如
+    chmod +x test.sh：赋予执行权限
+
+    u 表示该文件的拥有者，g 表示与该文件的拥有者属于同一个群体(group)者，o 表示其他以外的人，a 表示这三者皆是。
+    + 表示增加权限、- 表示取消权限、= 表示唯一设定权限。
+    r 表示可读取，w 表示可写入，x 表示可执行，X 表示只有当该文件是个子目录或者该文件已经被设定过为可执行。
+    上面的r、w、x可以用的数值替代：r=4，w=2，x=1
+    1、若要rwx属性则4+2+1=7；
+    2、若要rw-属性则4+2=6；
+    3、若要r-x属性则4+1=5。
+</code></pre><p><strong>5、cat</strong></p>
+<pre><code>    用于连接文件并打印到标准输出终端上，例如：
+    cat test.log 
+    若文件内容太多，可以配合grep、tail、head使用
+</code></pre><p><strong>6、grep</strong></p>
+<pre><code>    用于查找文件里符合条件的字符串
+</code></pre><p><strong>7、head和tail</strong></p>
+<pre><code>    head: 默认是显示开头前10行
+    head -k: 显示开头前k行
+    head -n -k: 除最后k行外，显示剩余全部内容
+
+    tail: 默认是显示末尾10行
+    tail -k: 显示末尾k行
+    tail +k：从第k行至文件末尾
+</code></pre><p><strong>8、rm</strong></p>
+<pre><code>    用于删除文件
+    rm test：删除test文件
+    rm -rf folder：删除文件夹及文件夹里的内容 ps：千万不要随便直接不带参数的执行rm -rf ，很容易就像网上段子那样删库跑路了hhh
+</code></pre><p><strong>9、cp</strong></p>
+<pre><code>    文件复制，规则：只有最后一个为目标。复制一个文件到一个文件  或者 多个文件到一个目录
+</code></pre><p><strong>10、mv</strong></p>
+<pre><code>    移动或重命名文件
+    mv test /filepath/ : 移动到指定目录
+    mv test test_1: 重命名
+</code></pre><p><strong>11、chmod</strong></p>
+<pre><code>    在终端上输出信息，例如
+    echo $test：输出名为test的环境变量
+</code></pre><p><strong>12、sed</strong></p>
+<pre><code>    利用脚本来处理文本文件
+    a ：新增， a 的后面可以接字串，而这些字串会在新的一行出现(目前的下一行)～
+    c ：取代， c 的后面可以接字串，这些字串可以取代 n1,n2 之间的行！
+    d ：删除，因为是删除啊，所以 d 后面通常不接任何咚咚；
+    i ：插入， i 的后面可以接字串，而这些字串会在新的一行出现(目前的上一行)；
+    p ：打印，亦即将某个选择的数据印出。通常 p 会与参数 sed -n 一起运行～
+    s ：取代，可以直接进行取代的工作哩！通常这个 s 的动作可以搭配正规表示法！例如 1,20s/old/new/g 就是啦！
+</code></pre><p><strong>13、vi/vim</strong></p>
+<pre><code>    多模式编辑器,而vim是vi的升级版本，它兼容vi的所有指令
+    i 切换到输入模式，以输入字符。
+    x 删除当前光标所在处的字符。
+    : 切换到底线命令模式，以在最底一行输入命令。
+</code></pre><p><strong>14、kill</strong></p>
+<pre><code>    用于删除执行中的程序
+    -l &lt;信息编号&gt; 　若不加&lt;信息编号&gt;选项，则-l参数会列出全部的信息名称。
+    -s &lt;信息名称或编号&gt; 　指定要送出的信息。
+    -9 彻底杀死进程
+</code></pre><p><strong>15、su</strong></p>
+<pre><code>    用于切换不同的用户。即使没有使用密码，超级用户也能切换到其它用户
+</code></pre><p><strong>16、find</strong></p>
+<pre><code>    用来在指定目录下查找文件，语法
+    find   path   -option   [   -print ]   [ -exec   -ok   command ]   {} \;
+
+    命令参数：
+    pathname: find命令所查找的目录路径。例如用.来表示当前目录，用/来表示系统根目录。
+    -print： find命令将匹配的文件输出到标准输出。
+    -exec： find命令对匹配的文件执行该参数所给出的shell命令。相应命令的形式为'command' { } \;，注意{ }和\；之间的空格。
+    -ok： 和-exec的作用相同，只不过以一种更为安全的模式来执行该参数所给出的shell命令，在执行每一个命令之前，都会给出提示，让用户来确定是否执行。
+</code></pre><p><strong>17、ps</strong></p>
+<pre><code>    列出系统中当前运行的那些进程
+    命令参数：
+    a  显示所有进程
+    -a 显示同一终端下的所有程序
+    -A 显示所有进程
+    c  显示进程的真实名称
+    -N 反向选择    
+    -e 等于“-A”
+    e  显示环境变量    
+    f  显示程序间的关系
+    -H 显示树状结构
+    r  显示当前终端的进程
+    T  显示当前终端的所有程序
+    u  指定用户的所有进程
+    -au 显示较详细的资讯
+    -aux 显示所有包含其他使用者的行程 
+    -C&lt;命令&gt; 列出指定命令的状况
+    --lines&lt;行数&gt; 每页显示的行数
+    --width&lt;字符数&gt; 每页显示的字符数
+    --help 显示帮助信息
+    --version 显示版本显示
+</code></pre><p><strong>18、exit</strong></p>
+<pre><code>    用于结束当前的终端会话
+</code></pre><p><strong>19、shutdown</strong></p>
+<pre><code>    用于关闭计算机，而shutdown -r用于重启计算机
+</code></pre><p><strong>20、netstat</strong></p>
+<pre><code>    用于显示各种网络相关信息
+    常见命令参数：
+    -a (all)显示所有选项，默认不显示LISTEN相关
+    -t (tcp)仅显示tcp相关选项
+    -u (udp)仅显示udp相关选项
+    -n 拒绝显示别名，能显示数字的全部转化成数字。
+    -l 仅列出有在 Listen (监听) 的服務状态
+
+    -p 显示建立相关链接的程序名
+    -r 显示路由信息，路由表
+    -e 显示扩展信息，例如uid等
+    -s 按各个协议进行统计
+    -c 每隔一个固定时间，执行该netstat命令。
+
+    提示：LISTEN和LISTENING的状态只有用-a或者-l才能看到
+</code></pre><p><strong>21、top</strong></p>
+<pre><code>    显示当前系统正在执行的进程的相关信息，包括进程ID、内存占用率、CPU占用率等
+    命令参数：
+    -b 批处理
+    -c 显示完整的治命令
+    -I 忽略失效过程
+    -s 保密模式
+    -S 累积模式
+    -i&lt;时间&gt; 设置间隔时间
+    -u&lt;用户名&gt; 指定用户名
+    -p&lt;进程号&gt; 指定进程
+    -n&lt;次数&gt; 循环显示的次数
+</code></pre><p><strong>22、scp</strong></p>
+<pre><code>    用于 Linux 之间复制文件和目录,是 linux 系统下基于 ssh 登陆进行安全的远程文件拷贝命令
+    -i 从指定文件中读取传输时使用的密钥文件，此参数直接传递给ssh。
+</code></pre><p><strong>23、ssh</strong></p>
+<pre><code>    用于远程登录
+    -i：指定密钥文件
+</code></pre></article>
+    </section>
+
+    <footer class="ui attached segment dream-tags">
+      
+        
+          <a class="ui label" href="/tags/%E6%8A%80%E6%9C%AF" title="技术">技术</a>
+        
+          <a class="ui label" href="/tags/linux" title="Linux">Linux</a>
+        
+          <a class="ui label" href="/tags/%E8%AE%B0%E5%BD%95" title="记录">记录</a>
+        
+      
+      <div
+        class="ui label"
+        style="float: right; background: #1b1c1d !important; cursor: pointer;"
+        onclick="savePostAsImg()">
+        <i class="save icon"></i> Save as image
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+  <div class="sixteen wide mobile sixteen wide tablet four wide computer column">
+    <article class="dream-header">
+  <section class="ui top attached center aligned segment">
+    <div class="ui small circular image">
+      
+        <img src="/img/head.jpg">
+      
+    </div>
+
+    <h3 class="ui header">Kevin的博客<div class="sub header" style="margin-top: 0.5rem;">一个小小菜鸟记录学习和踩坑的地方</div>
+    </h3>
+
+    <div class="ui horizontal list">
+      
+      <a class="item" href="/tags">
+        <i class="tags icon" title="所有标签"></i>
+      </a>
+      <a class="item" href="/categories">
+        <i class="th list icon" title="所有分类"></i>
+      </a>
+    </div>
+  </section>
+
+  
+  <section class="ui attached center aligned segment dream-tags">
+    
+      <a class="ui label" href="/tags/go" title="go">go</a>
+    
+      <a class="ui label" href="/tags/leetcode" title="leetcode">leetcode</a>
+    
+      <a class="ui label" href="/tags/linux" title="linux">linux</a>
+    
+      <a class="ui label" href="/tags/mysql" title="mysql">mysql</a>
+    
+      <a class="ui label" href="/tags/%E6%8A%80%E6%9C%AF" title="技术">技术</a>
+    
+      <a class="ui label" href="/tags/%E8%AE%B0%E5%BD%95" title="记录">记录</a>
+    
+  </section>
+  
+
+  
+  <section class="ui attached segment dream-categories">
+    <div class="ui accordion">
+      
+        <div class="title">
+          <i class="dropdown icon"></i>
+          <a href="/categories/golang" class="item">golang</a>
+        </div>
+        <div class="content">
+          <div class="ui list">
+          
+            <div class="item">
+              <div class="content">
+                <a href="https://pankaifan.github.io/post/go-defer/" class="item">Golang中的defer</a>
+              </div>
+            </div>
+          
+          </div>
+        </div>
+      
+        <div class="title">
+          <i class="dropdown icon"></i>
+          <a href="/categories/leetcode" class="item">leetcode</a>
+        </div>
+        <div class="content">
+          <div class="ui list">
+          
+            <div class="item">
+              <div class="content">
+                <a href="https://pankaifan.github.io/post/pathsum/" class="item">LeetCode-路径总和 II</a>
+              </div>
+            </div>
+          
+          </div>
+        </div>
+      
+        <div class="title">
+          <i class="dropdown icon"></i>
+          <a href="/categories/linux" class="item">linux</a>
+        </div>
+        <div class="content">
+          <div class="ui list">
+          
+            <div class="item">
+              <div class="content">
+                <a href="https://pankaifan.github.io/post/linux/" class="item">Linux常用命令</a>
+              </div>
+            </div>
+          
+          </div>
+        </div>
+      
+        <div class="title">
+          <i class="dropdown icon"></i>
+          <a href="/categories/%E8%AE%B0%E5%BD%95" class="item">记录</a>
+        </div>
+        <div class="content">
+          <div class="ui list">
+          
+            <div class="item">
+              <div class="content">
+                <a href="https://pankaifan.github.io/post/msql_deadlock/" class="item">记录一次在高并发情况下，出现的死锁问题</a>
+              </div>
+            </div>
+          
+          </div>
+        </div>
+      
+    </div>
+  </section>
+  
+
+  <section class="ui bottom attached center aligned segment">
+      
+      <p>© 2019 Kevin&#39;s Blog</p>
+      
+      <p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with theme <a href="https://github.com/g1eny0ung/hugo-theme-dream" target="_blank">Dream</a>.</p>
+  </section>
+</article>
+
+  </div>
+</div>
+
+        </section>
+        <section class="back">
+          
+<nav class="ui secondary menu dream-menu">
+
+  <div class="item">
+    <i class="large link bullseye icon dream-flip-toggle" title="翻转！"></i>
+  </div>
+  <div class="item">
+    <i class="large link home icon" title="首页" onclick="window.location.href = 'https:\/\/pankaifan.github.io'"></i>
+  </div>
+  <div class="item">
+    <i id="theme-switch" class="large link icon" onclick="themeSwitch()"></i>
+  </div>
+</nav>
+
+          <div class="ui centered relaxed grid dream-grid dream-back">
+  
+
+  <section class="sixteen wide mobile eight wide tablet four wide computer column dream-column">
+    <article>
+      <div class="ui top attached segment">
+        <h3 class="ui header">社交链接</h3>
+      </div>
+      <div class="ui attached segment">
+        <nav class="ui secondary menu dream-menu">
+          
+
+          
+
+          
+
+          
+
+          
+        </nav>
+      </div>
+    </article>
+  </section>
+
+  <section class="sixteen wide mobile eight wide tablet four wide computer column dream-column">
+    
+  </section>
+
+  
+  
+
+</div>
+
+        </section>
+      </div>
+    </div>
+
+    <script src="/js/jquery.min.js"></script>
+<script src="/js/semantic.min.js"></script>
+<script src="/js/imagesloaded.pkgd.min.js"></script>
+<script src="/js/masonry.pkgd.min.js"></script>
+<script src="/js/nav.js"></script>
+<script src="/js/header.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/theme.js"></script>
+<script src="/js/html2canvas.min.js"></script>
+
+
+
+  </body>
+</html>
